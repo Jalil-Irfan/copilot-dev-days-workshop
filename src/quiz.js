@@ -95,6 +95,25 @@ function getFeedbackMessage(grade) {
   }
 }
 
+/**
+ * Returns true when the current percentage is a new personal best.
+ * The best value may be null when no previous score has been stored.
+ */
+function isNewBestScore(current, best) {
+  if (best === null || best === undefined) {
+    return true;
+  }
+
+  const numericCurrent = Number(current);
+  const numericBest = Number(best);
+
+  if (!Number.isFinite(numericCurrent) || !Number.isFinite(numericBest)) {
+    return false;
+  }
+
+  return numericCurrent > numericBest;
+}
+
 // Lets Node.js tests load this file. Browsers ignore this block.
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
@@ -107,5 +126,6 @@ if (typeof module !== "undefined" && module.exports) {
     formatTimeLeft,
     getGrade,
     getFeedbackMessage,
+    isNewBestScore,
   };
 }

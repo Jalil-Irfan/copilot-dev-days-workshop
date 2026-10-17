@@ -122,3 +122,13 @@ button:focus-visible {
   border-color: var(--wrong);
   color: var(--wrong);
 }
+
+.success {
+  color: var(--correct);
+  font-weight: 700;
+}
+
+.best-score {
+  color: var(--muted);
+  font-weight: 600;
+}

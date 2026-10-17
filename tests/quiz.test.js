@@ -12,6 +12,7 @@ const {
   createQuiz,
   answerQuestion,
   isQuizFinished,
+  isNewBestScore,
 } = require("../src/quiz.js");
 
 test("createQuiz initializes a fresh quiz state", () => {
@@ -100,4 +101,11 @@ test("getFeedbackMessage returns the expected message for each grade", () => {
   assert.equal(getFeedbackMessage("B"), "Good job!");
   assert.equal(getFeedbackMessage("C"), "You can do better!");
   assert.equal(getFeedbackMessage("D"), "Keep practicing!");
+});
+
+test("isNewBestScore identifies when a score beats the stored best", () => {
+  assert.equal(isNewBestScore(80, null), true);
+  assert.equal(isNewBestScore(80, 60), true);
+  assert.equal(isNewBestScore(80, 80), false);
+  assert.equal(isNewBestScore(80, 90), false);
 });

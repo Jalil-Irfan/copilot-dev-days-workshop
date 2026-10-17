@@ -36,6 +36,21 @@ const QUESTIONS = [
     ],
     answer: 1,
   },
+  {
+    question: "Which file extension is commonly used for workflow files?",
+    options: [".yaml", ".toml", ".json", ".yml"],
+    answer: 3,
+  },
+  {
+    question: "Where are GitHub Actions workflows usually stored?",
+    options: [".github/workflows", "src/actions", ".vscode", "docs/ci"],
+    answer: 0,
+  },
+  {
+    question: "What event triggers a GitHub Actions workflow on push?",
+    options: ["merge", "release", "push", "fork"],
+    answer: 2,
+  },
 ];
 
 // Lets Node.js tests load this file. Browsers ignore this block.

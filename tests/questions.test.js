@@ -8,6 +8,11 @@ test("there are at least 5 questions", () => {
   assert.ok(QUESTIONS.length >= 5, `expected at least 5 questions, found ${QUESTIONS.length}`);
 });
 
+test("there are at least 3 GitHub Actions questions", () => {
+  const actionsQuestions = QUESTIONS.filter((q) => /github actions|workflow|action/i.test(q.question));
+  assert.ok(actionsQuestions.length >= 3, `expected at least 3 GitHub Actions questions, found ${actionsQuestions.length}`);
+});
+
 test("every question has text, 4 options and a valid answer index", () => {
   QUESTIONS.forEach((q, i) => {
     assert.equal(typeof q.question, "string", `question ${i + 1} needs question text`);

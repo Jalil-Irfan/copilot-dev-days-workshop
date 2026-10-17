@@ -1,6 +1,6 @@
 // UI code: connects the quiz logic (quiz.js) to the page (index.html).
 
-const state = { questions: [], current: 0, score: 0, timerId: null, timeLeft: 15 };
+let state = { questions: [], current: 0, score: 0, timerId: null, timeLeft: 15 };
 
 const QUESTION_TIME_LIMIT = 15;
 
@@ -63,9 +63,11 @@ function startTimer() {
 
 function startQuiz() {
   stopTimer();
-  state.questions = shuffle(QUESTIONS);
-  state.current = 0;
-  state.score = 0;
+  state = {
+    ...createQuiz(QUESTIONS),
+    timerId: null,
+    timeLeft: QUESTION_TIME_LIMIT,
+  };
   showScreen(quizScreen);
   renderQuestion();
 }
@@ -96,8 +98,10 @@ function selectAnswer(selectedIndex, selectedButton) {
   const buttons = optionsList.querySelectorAll("button");
   buttons.forEach((button) => (button.disabled = true));
 
-  if (isCorrect(question, selectedIndex)) {
-    state.score++;
+  const { state: nextState, correct } = answerQuestion(state, selectedIndex);
+  state = nextState;
+
+  if (correct) {
     selectedButton.classList.add("correct");
     feedbackText.textContent = "Correct!";
   } else {
@@ -112,8 +116,8 @@ function selectAnswer(selectedIndex, selectedButton) {
 
 function nextQuestion() {
   stopTimer();
-  state.current++;
-  if (state.current < state.questions.length) {
+  state = { ...state, current: state.current + 1 };
+  if (!isQuizFinished(state)) {
     renderQuestion();
   } else {
     showResults();

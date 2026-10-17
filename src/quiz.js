@@ -15,6 +15,39 @@ function shuffle(items) {
 }
 
 /**
+ * Returns a fresh quiz state with questions shuffled and score reset.
+ */
+function createQuiz(questions) {
+  return {
+    questions: shuffle(questions),
+    current: 0,
+    score: 0,
+  };
+}
+
+/**
+ * Returns the next state after selecting an answer, plus a boolean flag
+ * indicating whether the answer was correct.
+ */
+function answerQuestion(state, selectedIndex) {
+  const question = state.questions[state.current];
+  const correct = question ? question.answer === selectedIndex : false;
+  const nextState = {
+    ...state,
+    score: state.score + (correct ? 1 : 0),
+  };
+
+  return { state: nextState, correct };
+}
+
+/**
+ * Returns true when the quiz has reached the end.
+ */
+function isQuizFinished(state) {
+  return state.current >= state.questions.length;
+}
+
+/**
  * Returns true when the selected option is the correct one.
  */
 function isCorrect(question, selectedIndex) {
@@ -64,5 +97,15 @@ function getFeedbackMessage(grade) {
 
 // Lets Node.js tests load this file. Browsers ignore this block.
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { shuffle, isCorrect, calculatePercentage, formatTimeLeft, getGrade, getFeedbackMessage };
+  module.exports = {
+    shuffle,
+    createQuiz,
+    answerQuestion,
+    isQuizFinished,
+    isCorrect,
+    calculatePercentage,
+    formatTimeLeft,
+    getGrade,
+    getFeedbackMessage,
+  };
 }
